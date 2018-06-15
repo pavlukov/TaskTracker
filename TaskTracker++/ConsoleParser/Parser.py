@@ -1,4 +1,6 @@
 from enum import Enum
+from Controllers.UserController import *
+from Controllers.TaskController import *
 
 
 class Command(Enum):
@@ -10,8 +12,7 @@ class Command(Enum):
 
 class Arguments(Enum):
     add = 0
-    remove = 1
-    edit = 2
+    remove = dit = 2
     show = 3
 
 
@@ -24,19 +25,19 @@ def get_arguments(arg):
 
 
 def task_parse(arg):
-    try:
+    #try:
         if arg == Arguments.add:
-            print("task add")
+            TaskController.task_add("leha", "228", "ИСП", "Сдать 3 лабу", "02.07.2018", "Прога", 1, "Универ ИСП Лабы Питон")
         elif arg == Arguments.remove:
-            print("task remove")
+            TaskController.delete_task("Leha", "228", "16")
         elif arg == Arguments.edit:
             print("task edit")
         elif arg == Arguments.show:
             print("task show")
-    except:
-        print('Ошибка при выполнении операции.')
-    else:
-        print('Операция успешно завершена.')
+    #except:
+    #    print('Ошибка при выполнении операции с задачей.')
+    #else:
+    #    print('Операция успешно завершена.')
 
 
 def task_list_parse(arg):
@@ -50,7 +51,7 @@ def task_list_parse(arg):
         elif arg == Arguments.show:
             print("task list show")
     except:
-        print('Ошибка при выполнении операции.')
+        print('Ошибка при выполнении операции со списком задач.')
     else:
         print('Операция успешно завершена.')
 
@@ -66,29 +67,28 @@ def project_parse(arg):
         elif arg == Arguments.show:
             print("project show")
     except:
-        print('Ошибка при выполнении операции.')
+        print('Ошибка при выполнении операции с проектом.')
     else:
         print('Операция успешно завершена.')
 
 
-def user_parse(arg):
+def user_parse(arg, args):
     try:
         if arg == Arguments.add:
-            print("user add")
+            if len(args) == 3:
+                UserController.register_user(args[0], args[1], args[2])
+            else:
+                UserController.register_user(args[0], args[1])
         elif arg == Arguments.remove:
-            print("user remove")
+            UserController.delete_user(args[0], args[1])
         elif arg == Arguments.edit:
             print("user edit")
-        elif arg == Arguments.show:
-            print("user show")
     except:
-        print('Ошибка при выполнении операции.')
-    else:
-        print('Операция успешно завершена.')
+        print('Ошибка при выполнении операции с пользователем.')
 
 
 def parse(args):
-    if len(args) == 2:
+    if len(args) >= 2:
         try:
             command = get_command(args[0])
         except KeyError as e:
@@ -106,7 +106,7 @@ def parse(args):
                 elif command == Command.project:
                     project_parse(argument)
                 elif command == Command.user:
-                    user_parse(argument)
+                    user_parse(argument, args[2::])
 
     else:
         print('Неверное количество аргументов.')
