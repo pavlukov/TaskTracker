@@ -4,7 +4,7 @@ class Task:
         self.content = content
         self.deadline = deadline
         self.category = category
-        self.priority = priority
-        self.status = 0  # -1 - не выполнена, 0 - выполняется, 1 - выполнена
+        self.priority = priority  # the bigger number, the higher priority
+        self.status = 0  # -1 - expired, 0 - in process, 1 - done
         self.tags = tags
         self.id = None

@@ -1,6 +1,7 @@
 from enum import Enum
 from Controllers.UserController import *
 from Controllers.TaskController import *
+from Controllers.TaskListController import *
 
 
 class Command(Enum):
@@ -12,7 +13,8 @@ class Command(Enum):
 
 class Arguments(Enum):
     add = 0
-    remove = dit = 2
+    edit = 1
+    remove = 2
     show = 3
 
 
@@ -25,35 +27,35 @@ def get_arguments(arg):
 
 
 def task_parse(arg):
-    #try:
+    try:
         if arg == Arguments.add:
-            TaskController.task_add("leha", "228", "ИСП", "Сдать 3 лабу", "02.07.2018", "Прога", 1, "Универ ИСП Лабы Питон")
+            TaskController.add_task("Iluha", "228", "АВС", "Сдать зачет", "02.07.2018", "Прога", 1, "Универ ИСП Лабы Питон")
         elif arg == Arguments.remove:
-            TaskController.delete_task("Leha", "228", "16")
+            TaskController.delete_task("Iluha", "228", "22")
         elif arg == Arguments.edit:
-            print("task edit")
+            TaskController.edit_task("Iluha", "228", "21", "Зачет")
         elif arg == Arguments.show:
             print("task show")
-    #except:
-    #    print('Ошибка при выполнении операции с задачей.')
-    #else:
-    #    print('Операция успешно завершена.')
+    except:
+        print('Ошибка при выполнении операции с задачей.')
+    else:
+        print('Операция успешно завершена.')
 
 
 def task_list_parse(arg):
-    try:
+    #try:
         if arg == Arguments.add:
-            print("task list add")
+            TaskListController.add_task_list("Egor", "228", "Test", "01.01.2001", 228)
         elif arg == Arguments.remove:
-            print("task list remove")
+            TaskListController.add_sub_task("Egor", "228", "26", "20")
         elif arg == Arguments.edit:
-            print("task list edit")
+            TaskListController.delete_sub_task("Egor", "228", "26", "21")
         elif arg == Arguments.show:
             print("task list show")
-    except:
-        print('Ошибка при выполнении операции со списком задач.')
-    else:
-        print('Операция успешно завершена.')
+    #except:
+    #    print('Ошибка при выполнении операции со списком задач.')
+    #else:
+    #    print('Операция успешно завершена.')
 
 
 def project_parse(arg):

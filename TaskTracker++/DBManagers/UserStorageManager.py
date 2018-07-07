@@ -42,7 +42,7 @@ class UserStorageManager:
         c.execute("SELECT * FROM User WHERE nickname == '%s'" % nickname)
         user_args = c.fetchone()
         if user_args is not None:
-            user = User(user_args[0], user_args[1], user_args[2], user_args[3])
+            user = User(user_args[0], user_args[1], user_args[2], user_args[3], user_args[4])
             return user
         else:
             return None
@@ -51,7 +51,28 @@ class UserStorageManager:
     def change_user(cls, user):
         db = sqlite3.connect('TaskTrackerDB')
         c = db.cursor()
-        c.execute("UPDATE User SET nickname = '%s', password = '%s', task_id = '%s' WHERE user_id = '%s'" %
-                  (user.nickname, user.password, user.task_id, user.user_id))
+        c.execute("UPDATE User SET nickname = '%s', password = '%s', task_id = '%s',  user_id = '%s', task_list_id = "
+                  "'%s' WHERE user_id = '%s'"
+                  % (user.nickname, user.password, user.task_id, user.user_id, user.task_list_id, user.user_id))
         db.commit()
         db.close()
+
+    # returns list of users with given task id
+    @classmethod
+    def get_users_with_task(cls, id):
+        db = sqlite3.connect('TaskTrackerDB')
+        c = db.cursor()
+        c.execute("SELECT * FROM User WHERE instr(task_id, '%s ') > 0" % id)
+        users = c.fetchall()
+        db.close()
+        return users
+
+    # returns list of users with given task list id
+    @classmethod
+    def get_users_with_task_list(cls, id):
+        db = sqlite3.connect('TaskTrackerDB')
+        c = db.cursor()
+        c.execute("SELECT * FROM User WHERE instr(task_list_id, '%s ') > 0" % id)
+        users = c.fetchall()
+        db.close()
+        return users
