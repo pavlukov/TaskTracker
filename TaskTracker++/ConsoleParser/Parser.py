@@ -2,6 +2,7 @@ from enum import Enum
 from Controllers.UserController import *
 from Controllers.TaskController import *
 from Controllers.TaskListController import *
+from Controllers.ProjectController import *
 
 
 class Command(Enum):
@@ -51,7 +52,7 @@ def task_list_parse(arg):
         elif arg == Arguments.edit:
             TaskListController.delete_sub_task("Egor", "228", "26", "21")
         elif arg == Arguments.show:
-            print("task list show")
+            TaskListController.edit_task_list("Egor", "228", "25", tasks="223 5")
     #except:
     #    print('Ошибка при выполнении операции со списком задач.')
     #else:
@@ -59,19 +60,19 @@ def task_list_parse(arg):
 
 
 def project_parse(arg):
-    try:
+    #try:
         if arg == Arguments.add:
-            print("project add")
+            ProjectController.add_project("Iluha", "228", "gameway")
         elif arg == Arguments.remove:
-            print("project remove")
+            ProjectController.delete_project("Iluha", "228", "4")
         elif arg == Arguments.edit:
-            print("project edit")
+            ProjectController.add_user_to_project("Iluha", "228", "6", "11", project_task_id="23")
         elif arg == Arguments.show:
-            print("project show")
-    except:
-        print('Ошибка при выполнении операции с проектом.')
-    else:
-        print('Операция успешно завершена.')
+            ProjectController.delete_user_from_project("Iluha", "228", "6", "11")
+    #except:
+     #   print('Ошибка при выполнении операции с проектом.')
+    #else:
+     #   print('Операция успешно завершена.')
 
 
 def user_parse(arg, args):

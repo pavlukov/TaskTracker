@@ -5,13 +5,11 @@ from Models.User import *
 class UserController:
 
     @classmethod
-    def register_user(cls, name, password, task_id=None):
-        user = User(name, password, task_id)
+    def register_user(cls, name, password, task_id="", task_list_id=""):
+        user = User(name, password, task_id, task_list_id)
         if UserStorageManager.uniq_check(user):
-            if UserStorageManager.register_user(user):
-                print('Пользователь добавлен.')
-            else:
-                print('Ошибка при добавлении пользователя.')
+            UserStorageManager.register_user(user)
+            print('Пользователь добавлен.')
         else:
             print("Пользователь с таким именем уже существует.")
 
@@ -25,4 +23,4 @@ class UserController:
             else:
                 print("Неверный пароль.")
         else:
-            print("Пользователя с таким именем не существует.")
+            print("Неверный логин.")
