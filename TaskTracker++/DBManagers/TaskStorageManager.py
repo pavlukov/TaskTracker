@@ -44,7 +44,6 @@ class TaskStorageManager:
     def change_task(cls, task):
         db = sqlite3.connect('TaskTrackerDB')
         c = db.cursor()
-        print(task.id)
         c.execute("UPDATE Task SET name = '%s', content = '%s', deadline = '%s', category = '%s', "
                   "priority = '%s', status = '%s', tags = '%s' WHERE id = '%s'"
                   % (task.name, task.content, task.deadline, task.category, task.priority,

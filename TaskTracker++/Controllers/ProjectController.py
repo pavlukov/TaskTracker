@@ -137,6 +137,14 @@ class ProjectController:
                         return
                     project.users = project.users.replace('%s ' % user_id, '')
                     ProjectStorageManager.change_project(project)
+                    tasks = project.tasks.split(" ")[:-1]
+                    task_lists = project.task_lists.split(" ")[:-1]
+                    user = UserStorageManager.get_user_by_id(user_id)
+                    for task in tasks:
+                        user.project_task_id = user.project_task_id.replace("%s " % task, "")
+                    for task_list in task_lists:
+                        user.project_task_list_id = user.project_task_list_id.replace("%s " % task_list, '')
+                    UserStorageManager.change_user(user)
                     print("Пользователь удален из проекта.")
                 else:
                     print("Вы не являетесь владельцем проекта.")

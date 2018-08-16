@@ -28,25 +28,26 @@ def get_arguments(arg):
 
 
 def task_parse(arg):
-    try:
+    #try:
         if arg == Arguments.add:
-            TaskController.add_task("Iluha", "228", "АВС", "Сдать зачет", "02.07.2018", "Прога", 1, "Универ ИСП Лабы Питон")
+            TaskController.add_task("Egor", "228", "Уник", "Лаба", "24.08.2018", "Прога", 1, "Универ ИСП Лабы Питон")
         elif arg == Arguments.remove:
-            TaskController.delete_task("Iluha", "228", "22")
+            TaskController.delete_task("Egor", "228", "27")
         elif arg == Arguments.edit:
             TaskController.edit_task("Iluha", "228", "21", "Зачет")
         elif arg == Arguments.show:
-            print("task show")
-    except:
-        print('Ошибка при выполнении операции с задачей.')
-    else:
-        print('Операция успешно завершена.')
+            TaskController.check_deadline("Egor", "228")
+            TaskListController.check_deadline("Egor", "228")
+    #except:
+     #   print('Ошибка при выполнении операции с задачей.')
+    #else:
+     #   print('Операция успешно завершена.')
 
 
 def task_list_parse(arg):
     #try:
         if arg == Arguments.add:
-            TaskListController.add_task_list("Egor", "228", "Test", "01.01.2001", 228)
+            TaskListController.add_task_list("Egor", "228", "Test", "24.08.2001", 228)
         elif arg == Arguments.remove:
             TaskListController.add_sub_task("Egor", "228", "26", "20")
         elif arg == Arguments.edit:
@@ -66,7 +67,7 @@ def project_parse(arg):
         elif arg == Arguments.remove:
             ProjectController.delete_project("Iluha", "228", "4")
         elif arg == Arguments.edit:
-            ProjectController.add_user_to_project("Iluha", "228", "6", "11", project_task_id="23")
+            ProjectController.add_user_to_project("Iluha", "228", "6", "11", "23", "24 25")
         elif arg == Arguments.show:
             ProjectController.delete_user_from_project("Iluha", "228", "6", "11")
     #except:

@@ -107,3 +107,53 @@ class TaskListController:
         else:
             print("Неверный логин.")
 
+    @classmethod
+    def check_deadline(cls, nickname, password):
+        user = UserStorageManager.get_user(nickname)
+        if user.password == password:
+            task_lists = user.task_list_id.split(" ")[:-1]
+            for task_list_id in task_lists:
+                task_list = TaskListStorageManager.get_task_list(task_list_id)
+                tasks = task_list.tasks.split(" ")[:-1]
+                if len(tasks) == 0:
+                    break
+                all_tasks_are_expired = True
+                all_tasks_are_done = True
+                for task_id in tasks:
+                    task = TaskStorageManager.get_task(task_id)
+                    if task.status != -1:
+                        all_tasks_are_expired = False
+                    elif task.status != 1:
+                        all_tasks_are_done = False
+                if all_tasks_are_expired is True and task_list.status == 0:
+                    task_list.status = -1
+                    TaskListStorageManager.change_task_list(task_list)
+                    print("\n*ОПОВЕЩАНИЕ*\nСписок задач %s(%s) не выполнен.\n" % (task_list.name, task_list.id))
+                elif all_tasks_are_done and task_list.status == 0:
+                    task_list.status = 1
+                    TaskListStorageManager.change_task_list(task_list)
+                    print("Список задач %s(%s) выполнен." % (task_list.name, task_list.id))
+
+            project_task_lists = user.project_task_list_id.split(" ")[:-1]
+            for project_task_list_id in project_task_lists:
+                project_task_list = TaskListStorageManager.get_task_list(project_task_list_id)
+                tasks = project_task_list.tasks.split(" ")[:-1]
+                if len(tasks) == 0:
+                    break
+                all_tasks_are_expired = True
+                all_tasks_are_done = True
+                for task_id in tasks:
+                    task = TaskStorageManager.get_task(task_id)
+                    if task.status != -1:
+                        all_tasks_are_expired = False
+                    elif task.status != 1:
+                        all_tasks_are_done = False
+                if all_tasks_are_expired is True and project_task_list.status == 0:
+                    project_task_list.status = -1
+                    TaskListStorageManager.change_task_list(project_task_list)
+                    print("\n*ОПОВЕЩАНИЕ*\nСписок задач %s(%s) не выполнен.\n" %
+                          (project_task_list.name, project_task_list.id))
+                elif all_tasks_are_done and project_task_list.status == 0:
+                    project_task_list.status = 1
+                    TaskListStorageManager.change_task_list(project_task_list)
+                    print("Список задач %s(%s) выполнен." % (project_task_list.name, project_task_list.count))
